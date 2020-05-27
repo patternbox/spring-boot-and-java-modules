@@ -43,29 +43,41 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<!--configuration>
-					<jvmArguments>- -add-modules java.xml.bind</jvmArguments>
-				</configuration-->
 			</plugin>
 			
-			<!-- plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jlink-plugin</artifactId>
-				<version>3.0.0-alpha-1</version>
-				<extensions>true</extensions>
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<!-- version>3.1.0</version-->
 				<configuration>
-					<noHeaderFiles>true</noHeaderFiles>
-					<noManPages>true</noManPages>
-					<stripDebug>true</stripDebug>
+					<outputDirectory>
+					${project.build.directory}/modules
+					</outputDirectory>
 				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>org.ow2.asm</groupId>
-						<artifactId>asm</artifactId>
-						<version>7.0</version>
-					</dependency>
-				</dependencies>
-			</plugin-->
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<!-- version>3.1.1</version-->
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>
+								${project.build.directory}/modules
+							</outputDirectory>
+							<includeScope>runtime</includeScope>
+							<excludeArtifactIds>
+								spring-boot-devtools
+							</excludeArtifactIds>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 	</build>
 

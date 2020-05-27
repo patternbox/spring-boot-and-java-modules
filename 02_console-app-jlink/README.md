@@ -1,18 +1,56 @@
 
+## https://medium.com/criciumadev/its-time-migrating-to-java-11-5eb3868354f9
+
+```bash
+
+# (1)
+$ java --add-opens java.base/java.lang=spring.core \
+   --module-path target/modules \
+   --module patternbox.springboot.modules.console/com.patternbox.springboot.modules.console.CommandLineRunnerApplication
+
+# (2)
+$ jar --update \
+    --file=target/modules/console-app-jlink-1.0.0-SNAPSHOT.jar \
+    --main-class=com.patternbox.springboot.modules.console.CommandLineRunnerApplication
+
+# (3)
+$ java --add-opens java.base/java.lang=spring.core \
+   --module-path target/modules \
+   --module patternbox.springboot.modules.console
+```
+
+```bash
+$ jar --describe-module --file=target/modules/console-app-jlink-1.0.0-SNAPSHOT.jar
+> patternbox.springboot.modules.console@1.0.0-SNAPSHOT jar:file:///Users/dehms/Projects/sandbox-spring/spring-boot-and-java-modules/02_console-app-jlink/target/modules/console-app-jlink-1.0.0-SNAPSHOT.jar/!module-info.class open
+> requires java.base mandated
+> requires jdk.unsupported
+> requires spring.boot
+> requires spring.boot.autoconfigure
+> requires spring.context
+> contains com.patternbox.springboot.modules.console
+> main-class com.patternbox.springboot.modules.console.CommandLineRunnerApplication
+```
+
+--- 
+
+## Using JLink -> FAILED
+
+```bash
+$ rm -rf custom_jre \
+   && $JAVA_HOME/bin/jlink --no-header-files --no-man-pages --compress=2 \
+      --module-path target/modules \
+      --add-modules patternbox.springboot.modules.console \
+      --launcher launch=patternbox.springboot.modules.console/com.patternbox.springboot.modules.console.CommandLineRunnerApplication \
+      --output custom_jre
+
+> Error: automatic module cannot be used with jlink: spring.boot.starter from file:///Users/dehms/Projects/sandbox-spring/spring-boot-and-java-modules/02_console-app-jlink/target/modules/spring-boot-starter-2.2.7.RELEASE.jar
+```
+
 ## Maven JLink Plugin
 https://rmannibucau.metawerx.net/post/jlink-your-java-image-before-putting-into-docker-part-2-of-3
 
-```bash
-$ jar --describe-module --file=target/console-app-jlink-1.0.0-SNAPSHOT.jar
-patternbox.springboot.modules.console@1.0.0-SNAPSHOT jar:file:///Users/dehms/Projects/sandbox-spring/spring-boot-and-java-modules/02_console-app-jlink/target/console-app-jlink-1.0.0-SNAPSHOT.jar/!module-info.class
-exports com.patternbox.springboot.modules.console
-requires java.base mandated
-requires spring.boot
-requires spring.boot.autoconfigure
-requires spring.context
-opens com.patternbox.springboot.modules.console
 
-```
+## Archive....
 
 ```bash
 $ cd target \
