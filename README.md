@@ -27,4 +27,6 @@ https://javadeveloperzone.com/spring-boot/spring-boot-java-9-example/
 ### It’s time! Migrating to Java 11
 https://medium.com/criciumadev/its-time-migrating-to-java-11-5eb3868354f9
 
+### How to Migrate to Java 9? It’s Easy if You Do It Smart
+https://www.romexsoft.com/blog/migrate-to-java-9/
 

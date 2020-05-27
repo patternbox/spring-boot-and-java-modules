@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.patternbox.springboot.modules</groupId>
-	<artifactId>console-app</artifactId>
+	<artifactId>console-app-print-env</artifactId>
 	<version>1.2.3-SNAPSHOT</version>
 	<name>Command Line Runner</name>
 	<description>Demo project for Spring Boot: Command Line Runner</description>
@@ -42,6 +42,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<jvmArguments>--add-modules java.xml.bind</jvmArguments>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
