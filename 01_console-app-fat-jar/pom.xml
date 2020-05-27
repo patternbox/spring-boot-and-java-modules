@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.patternbox.springboot.modules</groupId>
-	<artifactId>console-app-print-env</artifactId>
+	<artifactId>console-app-fat-jar</artifactId>
 	<version>1.2.3-SNAPSHOT</version>
 	<name>Command Line Runner</name>
-	<description>Demo project for Spring Boot: Command Line Runner</description>
+	<description>Spring Boot and Java Modules: Fat-Jar Application</description>
 
 	<properties>
 		<java.version>11</java.version>
