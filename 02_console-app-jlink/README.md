@@ -3,6 +3,9 @@
 
 ```bash
 
+$ java --module-path target/modules \
+   --module patternbox.springboot.modules.console/com.patternbox.springboot.modules.console.CommandLineRunnerApplication
+
 # (1)
 $ java --add-opens java.base/java.lang=spring.core \
    --module-path target/modules \
