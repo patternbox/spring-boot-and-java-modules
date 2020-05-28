@@ -1,0 +1,32 @@
+version: '3.3'
+
+services:
+   db:
+     image: mysql:5.7
+     volumes:
+       - db_data:/var/lib/mysql
+     restart: always
+     environment:
+       #MYSQL_ROOT_PASSWORD: Rds4711!
+       #MYSQL_DATABASE: db_person
+       #MYSQL_USER: rdsroot
+       #MYSQL_PASSWORD: Rds4711!
+       MYSQL_DATABASE: db_person
+       MYSQL_ROOT_PASSWORD: Rds4711!
+       MYSQL_ROOT_HOST: '%'
+     ports:
+       - "3306:3306"
+
+   restrepo:
+     depends_on:
+       - db
+     image: rest-repo-webapp:latest
+     ports:
+       - "8080:8080"
+     restart: always
+     environment:
+       DB_HOST_NAME: db
+
+volumes:
+   db_data: {}
+ 

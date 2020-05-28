@@ -1,4 +1,4 @@
-package com.patternbox.restdata;
+package com.patternbox.restrepo;
 
 import org.springframework.data.repository.query.Param;
 

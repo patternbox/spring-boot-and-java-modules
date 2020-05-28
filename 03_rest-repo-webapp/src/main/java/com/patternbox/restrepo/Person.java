@@ -1,4 +1,4 @@
-package com.patternbox.restdata;
+package com.patternbox.restrepo;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
