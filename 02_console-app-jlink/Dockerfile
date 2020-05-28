@@ -1,26 +1,22 @@
 # https://stackoverflow.com/questions/53669151/java-11-application-as-lightweight-docker-image
-FROM alpine:latest as packager
+FROM openjdk:13-alpine AS builder
 
-RUN apk --no-cache add openjdk11-jdk openjdk11-jmods
+ENV JAVA_HOME=/opt/openjdk-13 \
+    PATH=${PATH}:/opt/openjdk-13/bin \
+    LANG=C.UTF-8
 
-ENV JAVA_MINIMAL="/opt/java-minimal"
-
-# build minimal JRE
-RUN /usr/lib/jvm/java-11-openjdk/bin/jlink \
-    --verbose \
-    --add-modules java.base,jdk.unsupported,java.desktop,java.naming \
-    --compress 2 --strip-debug --no-header-files --no-man-pages \
-    # --release-info="add:IMPLEMENTOR=radistao:IMPLEMENTOR_VERSION=radistao_JRE" \
-    --output "$JAVA_MINIMAL"
+RUN jlink \
+    --add-modules java.base,java.desktop,java.naming \
+    --output dist \
+    --compress 2 \
+    --strip-java-debug-attributes \
+    --no-header-files \
+    --no-man-pages
 
 FROM alpine:latest
 
-ENV JAVA_HOME=/opt/java-minimal
-ENV PATH="$PATH:$JAVA_HOME/bin"
-
-COPY --from=packager "$JAVA_HOME" "$JAVA_HOME"
+COPY --from=builder /dist /opt/jdk/
 COPY target/modules /modules/
-
-# ENV MAIN_CLASS=""
+ENV PATH=$PATH:/opt/jdk/bin
 
 ENTRYPOINT ["java", "--module-path", "/modules", "--module", "patternbox.springboot.modules.console/com.patternbox.springboot.modules.console.CommandLineRunnerApplication"]
